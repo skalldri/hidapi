@@ -221,20 +221,16 @@ static int lookup_functions()
 static HANDLE open_device(const char *path, BOOL enumerate)
 {
 	HANDLE handle;
-	DWORD desired_access = (enumerate)? 0: (GENERIC_WRITE | GENERIC_READ);
-	DWORD share_mode = (enumerate)?
-	                      FILE_SHARE_READ|FILE_SHARE_WRITE:
-	                      FILE_SHARE_READ;
 
-	handle = CreateFileA(path,
-		desired_access,
-		share_mode,
-		NULL,
-		OPEN_EXISTING,
-		FILE_FLAG_OVERLAPPED,/*FILE_ATTRIBUTE_NORMAL,*/
-		0);
+    handle = CreateFileA(path,
+        GENERIC_WRITE | GENERIC_READ,
+        FILE_SHARE_READ | FILE_SHARE_WRITE,
+        NULL,
+        OPEN_EXISTING,
+        FILE_FLAG_OVERLAPPED,
+        0);
 
-	return handle;
+    return handle;
 }
 
 int HID_API_EXPORT hid_init(void)
